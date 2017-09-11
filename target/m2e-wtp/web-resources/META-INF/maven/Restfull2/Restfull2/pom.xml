@@ -64,8 +64,11 @@
 			<version>${jersey2.version}</version>
 		</dependency>
 		<!-- if you are using Jersey client specific features -->
-		<!-- <dependency> <groupId>org.glassfish.jersey.core</groupId> <artifactId>jersey-client</artifactId> 
-			<version>${version.jersey}</version> </dependency> -->
+		<dependency>
+			<groupId>org.glassfish.jersey.core</groupId>
+			<artifactId>jersey-client</artifactId>
+			<version>${jersey2.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-multipart</artifactId>

@@ -1,5 +1,8 @@
 package com.example;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -45,8 +48,17 @@ public class SignUp {
 
 	@POST
 	@Consumes(value = MediaType.APPLICATION_JSON)
+	@Produces(value = MediaType.APPLICATION_JSON)
 	@Path("/save")
-	public void save_User(User_Entities user_Entities) {
+	public Response save_User(User_Entities user_Entities) throws URISyntaxException {
+
+		if (user_Entities == null) {
+			return Response.status(400).entity("Please add employee details !!").build();
+		}
+
+		if (user_Entities.getEmail() == null || user_Entities.getPassword() == null) {
+			return Response.status(400).entity("Please provide the Email and password  !!").build();
+		}
 
 		Session session = HibernateUtil.getSessionFactory().openSession();
 
@@ -55,6 +67,10 @@ public class SignUp {
 		session.save(user_Entities);
 		session.getTransaction().commit();
 		session.close();
+
+		return Response
+				.created(new URI("/rest/login/get/" + user_Entities.getEmail() + "/" + user_Entities.getPassword()))
+				.build();
 
 	}
 
